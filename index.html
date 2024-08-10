@@ -132,28 +132,29 @@ function scrollToCategory(categoryId) {
 
    <div id="spawning-commands" class="category">
     <h2>Spawning Commands</h2>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "vendingmachine.deployed", "Please enter the coordinates for the Vending Machine:", true)'>Spawn Vending Machine</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "recycler", "Please enter the coordinates for the Recycler:", true)'>Spawn Recycler</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "heli_crate", "Please enter the coordinates for the Heli Crate:", true)'>Spawn Heli Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "bradley_crate", "Please enter the coordinates for the Bradley Crate:", true)'>Spawn Bradley Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "codelock", "Please enter the coordinates for the Locked Crate:", true)'>Spawn Locked Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_elite", "Please enter the coordinates for the Elite Crate:", true)'>Spawn Elite Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "supply_drop", "Please enter the coordinates for the Supply Drop:", true)'>Spawn Supply Drop</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal", "Please enter the coordinates for the Military Crate:", true)'>Spawn Military Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal_2", "Please enter the coordinates for the Regular Crate:", true)'>Spawn Regular Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_tools", "Please enter the coordinates for the Tool Box:", true)'>Spawn Tool Box</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "woodbox_deployed", "Please enter the coordinates for the Small Wooden Box:", true)'>Spawn Small Wooden Box</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal_2_food", "Please enter the coordinates for the Food Crate:", true)'>Spawn Food Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "foodbox", "Please enter the coordinates for the Rations Box:", true)'>Spawn Rations Box</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal_2_medical", "Please enter the coordinates for the Medical Crate:", true)'>Spawn Medical Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "loot_barrel_1", "Please enter the coordinates for the Blue Barrel:", true)'>Spawn Blue Barrel</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "loot_barrel_2", "Please enter the coordinates for the White Barrel:", true)'>Spawn White Barrel</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_underwater_advanced", "Please enter the coordinates for the Large Underwater Crate:", true)'>Spawn Large Underwater Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_underwater_basic", "Please enter the coordinates for the Small Underwater Crate:", true)'>Spawn Small Underwater Crate</button>
-    <button class="command-button" onclick='copyWithPrompt("entity.spawnitem", "{item_name}", "Please enter the coordinates for the Item:", true)'>Spawn Item</button>
-    <button class="command-button" onclick='copyWithPrompt("monumentspawns.enableconfig", "{input}", "Enter the name of the monument:")'>Enable Monument Recycler</button>
-    <button class="command-button" onclick='copyWithPrompt("monumentspawns.forcespawnconfig", "{input}", "Enter the name of the monument:")'>Force Spawn Recycler</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn vendingmachine.deployed", "", "Please enter the coordinates for the Vending Machine:", true)'>Spawn Vending Machine</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn recycler", "", "Please enter the coordinates for the Recycler:", true)'>Spawn Recycler</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn heli_crate", "", "Please enter the coordinates for the Heli Crate:", true)'>Spawn Heli Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn bradley_crate", "", "Please enter the coordinates for the Bradley Crate:", true)'>Spawn Bradley Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn codelock", "", "Please enter the coordinates for the Locked Crate:", true)'>Spawn Locked Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_elite", "", "Please enter the coordinates for the Elite Crate:", true)'>Spawn Elite Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn supply_drop", "", "Please enter the coordinates for the Supply Drop:", true)'>Spawn Supply Drop</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_normal", "", "Please enter the coordinates for the Military Crate:", true)'>Spawn Military Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_normal_2", "", "Please enter the coordinates for the Regular Crate:", true)'>Spawn Regular Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_tools", "", "Please enter the coordinates for the Tool Box:", true)'>Spawn Tool Box</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn woodbox_deployed", "", "Please enter the coordinates for the Small Wooden Box:", true)'>Spawn Small Wooden Box</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_normal_2_food", "", "Please enter the coordinates for the Food Crate:", true)'>Spawn Food Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn foodbox", "", "Please enter the coordinates for the Rations Box:", true)'>Spawn Rations Box</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_normal_2_medical", "", "Please enter the coordinates for the Medical Crate:", true)'>Spawn Medical Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn loot_barrel_1", "", "Please enter the coordinates for the Blue Barrel:", true)'>Spawn Blue Barrel</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn loot_barrel_2", "", "Please enter the coordinates for the White Barrel:", true)'>Spawn White Barrel</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_underwater_advanced", "", "Please enter the coordinates for the Large Underwater Crate:", true)'>Spawn Large Underwater Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn crate_underwater_basic", "", "Please enter the coordinates for the Small Underwater Crate:", true)'>Spawn Small Underwater Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("entity.spawnitem {item_name}", "", "Please enter the coordinates for the Item:", true)'>Spawn Item</button>
+    <button class="command-button" onclick='copyWithPrompt("monumentspawns.enableconfig {input}", "", "Enter the name of the monument:")'>Enable Monument Recycler</button>
+    <button class="command-button" onclick='copyWithPrompt("monumentspawns.forcespawnconfig {input}", "", "Enter the name of the monument:")'>Force Spawn Recycler</button>
 </div>
+
 
    <div id="modifier-commands" class="category">
     <h2>Modifier Commands</h2>
