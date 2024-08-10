@@ -29,167 +29,213 @@
         }
     </style>
     <script>
-        function copyToClipboard(command) {
-            navigator.clipboard.writeText(command).then(function() {
-                alert('Copied to clipboard: ' + command);
-            }, function(err) {
-                alert('Failed to copy: ', err);
-            });
-        }
-        function scrollToCategory(categoryId) {
-            document.getElementById(categoryId).scrollIntoView({ behavior: 'smooth' });
-        }
-        function copyWithPrompt(commandTemplate) {
-            const userInput = prompt("Please enter the required value:");
-            if (userInput) {
-                const command = commandTemplate.replace('{input}', userInput);
-                copyToClipboard(command);
-            }
-        }
+   function copyWithPrompt(command, option = "", promptText = null) {
+    let input = prompt(promptText);
+    if (input) {
+        let fullCommand = `${command} "${input}"`.trim();
+        copyToClipboard(fullCommand);
+    } else {
+        alert("No input entered. Command cancelled.");
+    }
+}
+
+
+function copyWithMultiplePrompts(command, prompts, option = "") {
+    let inputs = prompts.map(promptText => prompt(`Enter the ${promptText}:`));
+    if (inputs.some(input => input === null || input === "")) {
+        alert("Command cancelled.");
+        return;
+    }
+    let fullCommand = `${command} "${inputs.join('" "')}" ${option}`.trim();
+    copyToClipboard(fullCommand);
+}
+
+function copyToClipboard(text) {
+    if (!text) {
+        alert('No text to copy');
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Copied to clipboard: ' + text);
+    }, function(err) {
+        alert('Failed to copy text: ', err);
+    });
+}
+
+function scrollToCategory(categoryId) {
+    const element = document.getElementById(categoryId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        alert('Category not found: ' + categoryId);
+    }
+}
+
     </script>
 </head>
 <body>
     <h1>Rust Console Commands</h1>
-        <div>
-        <button class="category-button" onclick="scrollToCategory('item-banning')">Item Banning</button>
-        <button class="category-button" onclick="scrollToCategory('spawning-commands')">Spawning Commands</button>
-        <button class="category-button" onclick="scrollToCategory('modifier-commands')">Modifier Commands</button>
-        <button class="category-button" onclick="scrollToCategory('kit-commands')">Kit Commands</button>
-        <button class="category-button" onclick="scrollToCategory('global-commands')">Global Commands</button>
-        <button class="category-button" onclick="scrollToCategory('inventory-commands')">Inventory Commands</button>
-        <button class="category-button" onclick="scrollToCategory('ammo')">Ammo</button>
-        <button class="category-button" onclick="scrollToCategory('weapons')">Weapons</button>
-        <button class="category-button" onclick="scrollToCategory('construction-items')">Construction Items</button>
-        <button class="category-button" onclick="scrollToCategory('items')">Items</button>
-        <button class="category-button" onclick="scrollToCategory('resources')">Resources</button>
-        <button class="category-button" onclick="scrollToCategory('attire')">Attire</button>
-        <button class="category-button" onclick="scrollToCategory('tools')">Tools</button>
-        <button class="category-button" onclick="scrollToCategory('meds-and-teas')">Meds and Teas</button>
-        <button class="category-button" onclick="scrollToCategory('food-and-plants')">Food and Plants</button>
-        <button class="category-button" onclick="scrollToCategory('traps-and-miscellaneous')">Traps and Miscellaneous</button>
-        <button class="category-button" onclick="scrollToCategory('components')">Components</button>
-        <button class="category-button" onclick="scrollToCategory('electrical')">Electrical</button>
-        <button class="category-button" onclick="scrollToCategory('animals')">Animals</button>
-        <button class="category-button" onclick="scrollToCategory('monument-ids')">Monument IDs</button>
-        <button class="category-button" onclick="scrollToCategory('player-commands')">Player Commands</button>
-        <button class="category-button" onclick="scrollToCategory('event-commands')">Event Commands</button>
-        <button class="category-button" onclick="scrollToCategory('entity-commands')">Entity Commands</button>
+  <div>
+    <!-- Console Commands Section -->
+    <div style="background-color: #f1f8e9; border: 1px solid #558b2f; border-radius: 8px; padding: 10px; margin-bottom: 20px;">
+        <h3 style="color: #558b2f;">Console Commands</h3>
+        <button class="category-button" onclick="scrollToCategory('item-banning')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Item Banning</button>
+        <button class="category-button" onclick="scrollToCategory('spawning-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Spawning Commands</button>
+        <button class="category-button" onclick="scrollToCategory('modifier-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Modifier Commands</button>
+        <button class="category-button" onclick="scrollToCategory('kit-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Kit Commands</button>
+        <button class="category-button" onclick="scrollToCategory('inventory-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Inventory Commands</button>
+        <button class="category-button" onclick="scrollToCategory('global-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Global Commands</button>
+        <button class="category-button" onclick="scrollToCategory('monument-ids')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Monument IDs</button>
+        <button class="category-button" onclick="scrollToCategory('player-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Player Commands</button>
+        <button class="category-button" onclick="scrollToCategory('event-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Event Commands</button>
+        <button class="category-button" onclick="scrollToCategory('entity-commands')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Entity Commands</button>
     </div>
-    <div id="item-banning" class="category">
-        <h2>Item Banning</h2>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" all`)'>Ban Item All</button>
-        <button class="command-button" onclick='copyWithPrompt(`unbanitem "{input}"`)'>Unban Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" NoCrafting`)'>Ban Item NoCrafting</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" TechTreeBypass`)'>Ban Item TechTreeBypass</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" TechTreeBlockpath`)'>Ban Item TechTreeBlockpath</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" NoTechTree`)'>Ban Item NoTechTree</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" ResearchedTableBlocked`)'>Ban Item ResearchedTableBlocked</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" NoResearch`)'>Ban Item NoResearch</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" NoItemSpawn`)'>Ban Item NoItemSpawn</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" NoBlueprintSpawn`)'>Ban Item NoBlueprintSpawn</button>
-        <button class="command-button" onclick='copyWithPrompt(`banitem "{input}" NoSpawn`)'>Ban Item NoSpawn</button>
-        <button class="command-button" onclick='copyToClipboard(`listbanneditems`)'>List Banned Items</button>
+
+    <!-- Item Shortnames Section -->
+    <div style="background-color: #e0f7fa; border: 1px solid #00838f; border-radius: 8px; padding: 10px; margin-bottom: 20px;">
+        <h3 style="color: #00838f;">Item Shortnames</h3>
+        <button class="category-button" onclick="scrollToCategory('ammo')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Ammo</button>
+        <button class="category-button" onclick="scrollToCategory('weapons')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Weapons</button>
+        <button class="category-button" onclick="scrollToCategory('construction-items')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Construction Items</button>
+        <button class="category-button" onclick="scrollToCategory('items')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Items</button>
+        <button class="category-button" onclick="scrollToCategory('resources')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Resources</button>
+        <button class="category-button" onclick="scrollToCategory('attire')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Attire</button>
+        <button class="category-button" onclick="scrollToCategory('tools')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Tools</button>
+        <button class="category-button" onclick="scrollToCategory('meds-and-teas')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Meds and Teas</button>
+        <button class="category-button" onclick="scrollToCategory('food-and-plants')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Food and Plants</button>
+        <button class="category-button" onclick="scrollToCategory('traps-and-miscellaneous')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Traps and Miscellaneous</button>
+        <button class="category-button" onclick="scrollToCategory('components')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Components</button>
+        <button class="category-button" onclick="scrollToCategory('electrical')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Electrical</button>
+        <button class="category-button" onclick="scrollToCategory('animals')" style="display: block; width: 100%; margin: 5px 0; padding: 10px; background-color: #ffffff; color: #000; border: 1px solid #cfd8dc; border-radius: 4px; text-align: left; font-size: 16px; cursor: pointer;">Animals</button>
     </div>
-    <div id="spawning-commands" class="category">
-        <h2>Spawning Commands</h2>
-        <button class="command-button" onclick='copyWithPrompt(`spawn vendingmachine.deployed ({input})`)'>Spawn Vending Machine</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn recycler ({input})`)'>Spawn Recycler</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn heli_crate ({input})`)'>Spawn Heli Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn bradley_crate ({input})`)'>Spawn Bradley Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn codelock ({input})`)'>Spawn Locked Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_elite ({input})`)'>Spawn Elite Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn supply_drop ({input})`)'>Spawn Supply Drop</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_normal ({input})`)'>Spawn Military Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_normal_2 ({input})`)'>Spawn Regular Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_tools ({input})`)'>Spawn Tool Box</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn woodbox_deployed ({input})`)'>Spawn Small Wooden Box</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_normal_2_food ({input})`)'>Spawn Food Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn foodbox ({input})`)'>Spawn Rations Box</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_normal_2_medical ({input})`)'>Spawn Medical Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn loot_barrel_1 ({input})`)'>Spawn Blue Barrel</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn loot_barrel_2 ({input})`)'>Spawn White Barrel</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_underwater_advanced ({input})`)'>Spawn Large Underwater Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`spawn crate_underwater_basic ({input})`)'>Spawn Small Underwater Crate</button>
-        <button class="command-button" onclick='copyWithPrompt(`entity.spawnitem "{input}" ({input})`)'>Spawn Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`monumentspawns.enableconfig "{input}"`)'>Enable Monument Recycler</button>
-        <button class="command-button" onclick='copyWithPrompt(`monumentspawns.forcespawnconfig "{input}"`)'>Force Spawn Recycler</button>
-    </div>
-    <div id="modifier-commands" class="category">
-        <h2>Modifier Commands</h2>
-        <button class="command-button" onclick='copyToClipboard(`modifiers.listallmodifiers`)'>List All Modifiers</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.listmodifiers "{input}"`)'>List Modifiers</button>
-        <button class="command-button" onclick='copyToClipboard(`modifiers.clearmodifiers all`)'>Clear All Modifiers</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.clearmodifier "{input}" tool`)'>Clear Tool Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.clearmodifier "{input}" all`)'>Clear All Item Modifiers</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.setmodifier "{input}" collection 2`)'>Set Collection Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.setmodifier "{input}" gather 3`)'>Set Gather Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.setmodifier "{input}" tool 2`)'>Set Tool Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.setmodifier "{input}" loot 3`)'>Set Loot Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.setmodifier "{input}" cookspeed 3`)'>Set Cook Speed Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`modifiers.setmodifier "{input}" cookamount 3`)'>Set Cook Amount Modifier</button>
-        <button class="command-button" onclick='copyWithPrompt(`craft.furnaceusagemultiplier {input}`)'>Set Furnace Usage Multiplier</button>
-        <button class="command-button" onclick='copyWithPrompt(`craft.itemcookspeedmultiplier {input}`)'>Set Item Cook Speed Multiplier</button>
-    </div>
+</div>
+
+
+
+
+
+  <div id="item-banning" class="category">
+    <h2>Item Banning</h2>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "all", "Enter the item name:")'>Ban Item All</button>
+    <button class="command-button" onclick='copyWithPrompt("unbanitem", "", "Enter the item name:")'>Unban Item</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "NoCrafting", "Enter the item name:")'>Ban Item NoCrafting</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "TechTreeBypass", "Enter the item name:")'>Ban Item TechTreeBypass</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "TechTreeBlockpath", "Enter the item name:")'>Ban Item TechTreeBlockpath</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "NoTechTree", "Enter the item name:")'>Ban Item NoTechTree</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "ResearchedTableBlocked", "Enter the item name:")'>Ban Item ResearchedTableBlocked</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "NoResearch", "Enter the item name:")'>Ban Item NoResearch</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "NoItemSpawn", "Enter the item name:")'>Ban Item NoItemSpawn</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "NoBlueprintSpawn", "Enter the item name:")'>Ban Item NoBlueprintSpawn</button>
+    <button class="command-button" onclick='copyWithPrompt("banitem", "NoSpawn", "Enter the item name:")'>Ban Item NoSpawn</button>
+    <button class="command-button" onclick='copyToClipboard(`listbanneditems`)'>List Banned Items</button>
+</div>
+
+   <div id="spawning-commands" class="category">
+    <h2>Spawning Commands</h2>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "vendingmachine.deployed", "Please enter the coordinates for the Vending Machine:", true)'>Spawn Vending Machine</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "recycler", "Please enter the coordinates for the Recycler:", true)'>Spawn Recycler</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "heli_crate", "Please enter the coordinates for the Heli Crate:", true)'>Spawn Heli Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "bradley_crate", "Please enter the coordinates for the Bradley Crate:", true)'>Spawn Bradley Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "codelock", "Please enter the coordinates for the Locked Crate:", true)'>Spawn Locked Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_elite", "Please enter the coordinates for the Elite Crate:", true)'>Spawn Elite Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "supply_drop", "Please enter the coordinates for the Supply Drop:", true)'>Spawn Supply Drop</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal", "Please enter the coordinates for the Military Crate:", true)'>Spawn Military Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal_2", "Please enter the coordinates for the Regular Crate:", true)'>Spawn Regular Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_tools", "Please enter the coordinates for the Tool Box:", true)'>Spawn Tool Box</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "woodbox_deployed", "Please enter the coordinates for the Small Wooden Box:", true)'>Spawn Small Wooden Box</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal_2_food", "Please enter the coordinates for the Food Crate:", true)'>Spawn Food Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "foodbox", "Please enter the coordinates for the Rations Box:", true)'>Spawn Rations Box</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_normal_2_medical", "Please enter the coordinates for the Medical Crate:", true)'>Spawn Medical Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "loot_barrel_1", "Please enter the coordinates for the Blue Barrel:", true)'>Spawn Blue Barrel</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "loot_barrel_2", "Please enter the coordinates for the White Barrel:", true)'>Spawn White Barrel</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_underwater_advanced", "Please enter the coordinates for the Large Underwater Crate:", true)'>Spawn Large Underwater Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("spawn", "crate_underwater_basic", "Please enter the coordinates for the Small Underwater Crate:", true)'>Spawn Small Underwater Crate</button>
+    <button class="command-button" onclick='copyWithPrompt("entity.spawnitem", "{item_name}", "Please enter the coordinates for the Item:", true)'>Spawn Item</button>
+    <button class="command-button" onclick='copyWithPrompt("monumentspawns.enableconfig", "{input}", "Enter the name of the monument:")'>Enable Monument Recycler</button>
+    <button class="command-button" onclick='copyWithPrompt("monumentspawns.forcespawnconfig", "{input}", "Enter the name of the monument:")'>Force Spawn Recycler</button>
+</div>
+
+   <div id="modifier-commands" class="category">
+    <h2>Modifier Commands</h2>
+    <button class="command-button" onclick='copyToClipboard(`modifiers.listallmodifiers`)'>List All Modifiers</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.listmodifiers", "", "Enter the item or category for which you want to list modifiers:")'>List Modifiers</button>
+    <button class="command-button" onclick='copyToClipboard(`modifiers.clearmodifiers all`)'>Clear All Modifiers</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.clearmodifier", "tool", "Enter the item for which you want to clear the tool modifier:")'>Clear Tool Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.clearmodifier", "all", "Enter the item for which you want to clear all modifiers:")'>Clear All Item Modifiers</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.setmodifier", "collection 2", "Enter the item for which you want to set the collection modifier:")'>Set Collection Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.setmodifier", "gather 3", "Enter the item for which you want to set the gather modifier:")'>Set Gather Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.setmodifier", "tool 2", "Enter the item for which you want to set the tool modifier:")'>Set Tool Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.setmodifier", "loot 3", "Enter the item for which you want to set the loot modifier:")'>Set Loot Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.setmodifier", "cookspeed 3", "Enter the item for which you want to set the cook speed modifier:")'>Set Cook Speed Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("modifiers.setmodifier", "cookamount 3", "Enter the item for which you want to set the cook amount modifier:")'>Set Cook Amount Modifier</button>
+    <button class="command-button" onclick='copyWithPrompt("craft.furnaceusagemultiplier", "", "Enter the multiplier value for furnace usage:")'>Set Furnace Usage Multiplier</button>
+    <button class="command-button" onclick='copyWithPrompt("craft.itemcookspeedmultiplier", "", "Enter the multiplier value for item cook speed:")'>Set Item Cook Speed Multiplier</button>
+</div>
+
     <div id="kit-commands" class="category">
-        <h2>Kit Commands</h2>
-        <button class="command-button" onclick='copyToClipboard(`kit list`)'>List Kits</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit add "{input}" "{input}" "{input}" "{input}" "{input}"`)'>Add Kit</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit remove "{input}" "{input}"`)'>Remove Kit Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit info "{input}"`)'>Kit Info</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit delete "{input}"`)'>Delete Kit</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit edit "{input}" addgroup "{input}"`)'>Add Group Kit</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit givetogroup "{input}" "{input}"`)'>Give Group Kit</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit givetoplayer "{input}" "{input}"`)'>Give Player Kit</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit giveall "{input}"`)'>Give All Kit</button>
-        <button class="command-button" onclick='copyWithPrompt(`kit edit "{input}" removegroup "{input}"`)'>Remove Group Kit</button>
-    </div>
-    <div id="global-commands" class="category">
-        <h2>Global Commands</h2>
-        <button class="command-button" onclick='copyWithPrompt(`dayview "{input}"`)'>Toggle Dayview</button>
-        <button class="command-button" onclick='copyWithPrompt(`say "{input}"`)'>Say Message</button>
-        <button class="command-button" onclick='copyToClipboard(`ent info`)'>Entity Info</button>
-        <button class="command-button" onclick='copyToClipboard(`ent who`)'>Entity Who</button>
-        <button class="command-button" onclick='copyToClipboard(`ent kill`)'>Entity Kill</button>
-        <button class="command-button" onclick='copyToClipboard(`ent unlock`)'>Entity Unlock</button>
-        <button class="command-button" onclick='copyToClipboard(`ent lock`)'>Entity Lock</button>
-        <button class="command-button" onclick='copyWithPrompt(`baseprojectile.fullstartingmagazine "{input}"`)'>Toggle Full Starting Magazine</button>
-        <button class="command-button" onclick='copyWithPrompt(`baseprojectile.infiniteammo "{input}"`)'>Toggle Infinite Ammo</button>
-        <button class="command-button" onclick='copyWithPrompt(`craft.adddefaultblueprint "{input}"`)'>Add Default Blueprint</button>
-        <button class="command-button" onclick='copyWithPrompt(`craft.removedefaultblueprint "{input}"`)'>Remove Default Blueprint</button>
-        <button class="command-button" onclick='copyToClipboard(`craft.listdefaultblueprint`)'>List Default Blueprints</button>
-        <button class="command-button" onclick='copyToClipboard(`ai.killanimals`)'>Kill All Animals</button>
-        <button class="command-button" onclick='copyToClipboard(`ai.killscientists`)'>Kill All Scientists</button>
-        <button class="command-button" onclick='copyWithPrompt(`construct.demolishhammer "{input}"`)'>Toggle Demolish Hammer</button>
-        <button class="command-button" onclick='copyWithPrompt(`construct.freeconstruction "{input}"`)'>Toggle Free Construction</button>
-        <button class="command-button" onclick='copyWithPrompt(`construct.freeupgrading "{input}"`)'>Toggle Free Upgrading</button>
-        <button class="command-button" onclick='copyToClipboard(`servermgr.numsleepingplayers`)'>Number of Sleeping Players</button>
-        <button class="command-button" onclick='copyWithPrompt(`env.progresstime "{input}"`)'>Toggle Time Progression</button>
-        <button class="command-button" onclick='copyWithPrompt(`env.time "{input}"`)'>Set Time</button>
-        <button class="command-button" onclick='copyToClipboard(`Spawn.fill_groups`)'>Reset Loot and AIs</button>
-        <button class="command-button" onclick='copyToClipboard(`junkpile.getjunkpilecounts`)'>Get Junkpile Counts</button>
-        <button class="command-button" onclick='copyWithPrompt(`ai.npc_junkpilespawn_chance {input}`)'>NPC Junkpile Spawn Chance</button>
-        <button class="command-button" onclick='copyWithPrompt(`ai.npc_max_junkpile_count {input}`)'>NPC Max Junkpile Count</button>
-        <button class="command-button" onclick='copyWithPrompt(`attackentity.npc_aimconescale {input}`)'>Set NPC Aim Cone Scale</button>
-        <button class="command-button" onclick='copyWithPrompt(`attackentity.npc_attackcooldownscale {input}`)'>Set NPC Attack Cooldown Scale</button>
-        <button class="command-button" onclick='copyWithPrompt(`attackentity.npc_attacklengthscale {input}`)'>Set NPC Attack Length Scale</button>
-        <button class="command-button" onclick='copyWithPrompt(`attackentity.npc_attackspacingscale {input}`)'>Set NPC Attack Spacing Scale</button>
-        <button class="command-button" onclick='copyWithPrompt(`attackentity.npc_damagescale {input}`)'>Set NPC Damage Scale</button>
-        <button class="command-button" onclick='copyToClipboard(`attackentity.set_easy_ai`)'>Set Easy AI</button>
-        <button class="command-button" onclick='copyToClipboard(`attackentity.set_normal_ai`)'>Set Normal AI</button>
-    </div>
-    <div id="inventory-commands" class="category">
-        <h2>Inventory Commands</h2>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.adddefaultitem "{input}"`)'>Add Default Item</button>
-        <button class="command-button" onclick='copyToClipboard(`inventory.cleardefaultitem`)'>Clear Default Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.removedefaultitem "{input}"`)'>Remove Default Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.give "{input}" "{input}"`)'>Give Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.giveall "{input}" "{input}"`)'>Give All Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.givedrop "{input}"`)'>Give Drop Item</button>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.giveto "{input}" "{input}"`)'>Give to Player</button>
-        <button class="command-button" onclick='copyToClipboard(`inventory.resetbp`)'>Reset Blueprints</button>
-        <button class="command-button" onclick='copyToClipboard(`inventory.unlockall`)'>Unlock All Blueprints</button>
-        <button class="command-button" onclick='copyWithPrompt(`inventory.removedroppeditems "{input}"`)'>Remove Dropped Items</button>
-    </div>
+    <h2>Kit Commands</h2>
+    <button class="command-button" onclick='copyToClipboard(`kit list`)'>List Kits</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("kit add", ["kit name", "cooldown", "max uses", "permission", "description"])'>Add Kit</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("kit remove", ["kit name", "item to remove"])'>Remove Kit Item</button>
+    <button class="command-button" onclick='copyWithPrompt("kit info", "", "Enter the kit name:")'>Kit Info</button>
+    <button class="command-button" onclick='copyWithPrompt("kit delete", "", "Enter the kit name to delete:")'>Delete Kit</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("kit edit", ["kit name", "group name"], "addgroup")'>Add Group Kit</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("kit givetogroup", ["kit name", "group name"])'>Give Group Kit</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("kit givetoplayer", ["kit name", "player name"])'>Give Player Kit</button>
+    <button class="command-button" onclick='copyWithPrompt("kit giveall", "", "Enter the kit name to give to all players:")'>Give All Kit</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("kit edit", ["kit name", "group name"], "removegroup")'>Remove Group Kit</button>
+</div>
+
+   <div id="global-commands" class="category">
+    <h2>Global Commands</h2>
+    <button class="command-button" onclick='copyWithPrompt("dayview", "", "Enter 1 to enable or 0 to disable Dayview:")'>Toggle Dayview</button>
+    <button class="command-button" onclick='copyWithPrompt("say", "", "Enter the message to broadcast:")'>Say Message</button>
+    <button class="command-button" onclick='copyToClipboard(`ent info`)'>Entity Info</button>
+    <button class="command-button" onclick='copyToClipboard(`ent who`)'>Entity Who</button>
+    <button class="command-button" onclick='copyToClipboard(`ent kill`)'>Entity Kill</button>
+    <button class="command-button" onclick='copyToClipboard(`ent unlock`)'>Entity Unlock</button>
+    <button class="command-button" onclick='copyToClipboard(`ent lock`)'>Entity Lock</button>
+    <button class="command-button" onclick='copyWithPrompt("baseprojectile.fullstartingmagazine", "", "Enter 1 to enable or 0 to disable Full Starting Magazine:")'>Toggle Full Starting Magazine</button>
+    <button class="command-button" onclick='copyWithPrompt("baseprojectile.infiniteammo", "", "Enter 1 to enable or 0 to disable Infinite Ammo:")'>Toggle Infinite Ammo</button>
+    <button class="command-button" onclick='copyWithPrompt("craft.adddefaultblueprint", "", "Enter the name of the blueprint to add:")'>Add Default Blueprint</button>
+    <button class="command-button" onclick='copyWithPrompt("craft.removedefaultblueprint", "", "Enter the name of the blueprint to remove:")'>Remove Default Blueprint</button>
+    <button class="command-button" onclick='copyToClipboard(`craft.listdefaultblueprint`)'>List Default Blueprints</button>
+    <button class="command-button" onclick='copyToClipboard(`ai.killanimals`)'>Kill All Animals</button>
+    <button class="command-button" onclick='copyToClipboard(`ai.killscientists`)'>Kill All Scientists</button>
+    <button class="command-button" onclick='copyWithPrompt("construct.demolishhammer", "", "Enter 1 to enable or 0 to disable Demolish Hammer:")'>Toggle Demolish Hammer</button>
+    <button class="command-button" onclick='copyWithPrompt("construct.freeconstruction", "", "Enter 1 to enable or 0 to disable Free Construction:")'>Toggle Free Construction</button>
+    <button class="command-button" onclick='copyWithPrompt("construct.freeupgrading", "", "Enter 1 to enable or 0 to disable Free Upgrading:")'>Toggle Free Upgrading</button>
+    <button class="command-button" onclick='copyToClipboard(`servermgr.numsleepingplayers`)'>Number of Sleeping Players</button>
+    <button class="command-button" onclick='copyWithPrompt("env.progresstime", "", "Enter 1 to enable or 0 to disable Time Progression:")'>Toggle Time Progression</button>
+    <button class="command-button" onclick='copyWithPrompt("env.time", "", "Enter the time to set (e.g., 12 for noon, 18 for evening):")'>Set Time</button>
+    <button class="command-button" onclick='copyToClipboard(`Spawn.fill_groups`)'>Reset Loot and AIs</button>
+    <button class="command-button" onclick='copyToClipboard(`junkpile.getjunkpilecounts`)'>Get Junkpile Counts</button>
+    <button class="command-button" onclick='copyWithPrompt("ai.npc_junkpilespawn_chance", "", "Enter the NPC Junkpile Spawn Chance:")'>NPC Junkpile Spawn Chance</button>
+    <button class="command-button" onclick='copyWithPrompt("ai.npc_max_junkpile_count", "", "Enter the NPC Max Junkpile Count:")'>NPC Max Junkpile Count</button>
+    <button class="command-button" onclick='copyWithPrompt("attackentity.npc_aimconescale", "", "Enter the NPC Aim Cone Scale:")'>Set NPC Aim Cone Scale</button>
+    <button class="command-button" onclick='copyWithPrompt("attackentity.npc_attackcooldownscale", "", "Enter the NPC Attack Cooldown Scale:")'>Set NPC Attack Cooldown Scale</button>
+    <button class="command-button" onclick='copyWithPrompt("attackentity.npc_attacklengthscale", "", "Enter the NPC Attack Length Scale:")'>Set NPC Attack Length Scale</button>
+    <button class="command-button" onclick='copyWithPrompt("attackentity.npc_attackspacingscale", "", "Enter the NPC Attack Spacing Scale:")'>Set NPC Attack Spacing Scale</button>
+    <button class="command-button" onclick='copyWithPrompt("attackentity.npc_damagescale", "", "Enter the NPC Damage Scale:")'>Set NPC Damage Scale</button>
+    <button class="command-button" onclick='copyToClipboard(`attackentity.set_easy_ai`)'>Set Easy AI</button>
+    <button class="command-button" onclick='copyToClipboard(`attackentity.set_normal_ai`)'>Set Normal AI</button>
+</div>
+
+   <div id="inventory-commands" class="category">
+    <h2>Inventory Commands</h2>
+    <button class="command-button" onclick='copyWithPrompt("inventory.adddefaultitem", "", "Enter the item name to add as a default item:")'>Add Default Item</button>
+    <button class="command-button" onclick='copyToClipboard(`inventory.cleardefaultitem`)'>Clear Default Item</button>
+    <button class="command-button" onclick='copyWithPrompt("inventory.removedefaultitem", "", "Enter the item name to remove from default items:")'>Remove Default Item</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("inventory.give", ["player name", "item name", "quantity"], "")'>Give Item</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("inventory.giveall", ["item name", "quantity"], "")'>Give All Item</button>
+    <button class="command-button" onclick='copyWithPrompt("inventory.givedrop", "", "Enter the item name to give as a drop:")'>Give Drop Item</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("inventory.giveto", ["player name", "item name", "quantity"], "")'>Give to Player</button>
+    <button class="command-button" onclick='copyToClipboard(`inventory.resetbp`)'>Reset Blueprints</button>
+    <button class="command-button" onclick='copyToClipboard(`inventory.unlockall`)'>Unlock All Blueprints</button>
+    <button class="command-button" onclick='copyWithPrompt("inventory.removedroppeditems", "", "Enter the item name to remove dropped items:")'>Remove Dropped Items</button>
+</div>
+
+
     <div id="ammo" class="category">
         <h2>Ammo</h2>
         <button class="command-button" onclick='copyToClipboard(`ammo.shotgun`)'>12 Gauge Buckshot</button>
@@ -666,42 +712,44 @@
         <button class="command-button" onclick='copyToClipboard(`generator.wind.scrap`)'>Wind Turbine</button>
         <button class="command-button" onclick='copyToClipboard(`wiretool`)'>Wire Tool</button>
         <button class="command-button" onclick='copyToClipboard(`electric.xorswitch`)'>XOR Switch</button>
-    <div id="player-commands" class="category">
+   <div id="player-commands" class="category">
     <h2>Player Commands</h2>
-    <button class="command-button" onclick='copyToClipboard(`vipid "${prompt("Enter the Player ID to grant VIP:")}"`)'>Grant VIP</button>
-    <button class="command-button" onclick='copyToClipboard(`removevip "${prompt("Enter the Player ID to revoke VIP:")}"`)'>Revoke VIP</button>
-    <button class="command-button" onclick='copyToClipboard(`moderatorid "${prompt("Enter the Player ID to grant Moderator:")}"`)'>Grant Moderator</button>
-    <button class="command-button" onclick='copyToClipboard(`removemoderator "${prompt("Enter the Player ID to revoke Moderator:")}"`)'>Revoke Moderator</button>
-    <button class="command-button" onclick='copyToClipboard(`adminid "${prompt("Enter the Player ID to grant Admin:")}"`)'>Grant Admin</button>
-    <button class="command-button" onclick='copyToClipboard(`removeadmin "${prompt("Enter the Player ID to revoke Admin:")}"`)'>Revoke Admin</button>
-    <button class="command-button" onclick='copyToClipboard(`getauthlevel "${prompt("Enter the Player ID to get Auth Level:")}"`)'>Get Auth Level</button>
-    <button class="command-button" onclick='copyToClipboard(`banid "${prompt("Enter the Player ID to ban:")}"`)'>Ban Player</button>
-    <button class="command-button" onclick='copyToClipboard(`unban "${prompt("Enter the Player ID to unban:")}"`)'>Unban Player</button>
-    <button class="command-button" onclick='copyToClipboard(`teleport "${prompt("Enter the Player ID to teleport:")}" ${prompt("Enter the coordinates (x,y,z):")}`)'>Teleport Player</button>
-    <button class="command-button" onclick='copyToClipboard(`teleport2me "${prompt("Enter the Player ID to teleport to you:")}" ${prompt("Enter the coordinates (x,y,z):")}`)'>Teleport to Me</button>
-    <button class="command-button" onclick='copyToClipboard(`teleportgrid "${prompt("Enter the position:")}" "${prompt("Enter the spacing:")}" "${prompt("Enter the rotation:")}" "${prompt("Enter the Max Per Row:")}"`)'>Teleport Grid</button>
-    <button class="command-button" onclick='copyToClipboard(`teleportpos "${prompt("Enter the position:")}" "${prompt("Enter the Player ID:")}" ${prompt("Place on ground? (true/false):")}`)'>Teleport Position</button>
-    <button class="command-button" onclick='copyToClipboard(`teaminfo "${prompt("Enter the team ID:")}"`)'>Team Info</button>
-    <button class="command-button" onclick='copyToClipboard(`sleep "${prompt("Enter the Player ID to put to sleep:")}"`)'>Put Player to Sleep</button>
-    <button class="command-button" onclick='copyToClipboard(`relationshipmanager.sleeptoggleother "${prompt("Enter the Player ID to toggle sleep:")}"`)'>Sleep Toggle Player</button>
+    <button class="command-button" onclick='copyWithPrompt("vipid", "", "Enter the Player ID to grant VIP:")'>Grant VIP</button>
+    <button class="command-button" onclick='copyWithPrompt("removevip", "", "Enter the Player ID to revoke VIP:")'>Revoke VIP</button>
+    <button class="command-button" onclick='copyWithPrompt("moderatorid", "", "Enter the Player ID to grant Moderator:")'>Grant Moderator</button>
+    <button class="command-button" onclick='copyWithPrompt("removemoderator", "", "Enter the Player ID to revoke Moderator:")'>Revoke Moderator</button>
+    <button class="command-button" onclick='copyWithPrompt("adminid", "", "Enter the Player ID to grant Admin:")'>Grant Admin</button>
+    <button class="command-button" onclick='copyWithPrompt("removeadmin", "", "Enter the Player ID to revoke Admin:")'>Revoke Admin</button>
+    <button class="command-button" onclick='copyWithPrompt("getauthlevel", "", "Enter the Player ID to get Auth Level:")'>Get Auth Level</button>
+    <button class="command-button" onclick='copyWithPrompt("banid", "", "Enter the Player ID to ban:")'>Ban Player</button>
+    <button class="command-button" onclick='copyWithPrompt("unban", "", "Enter the Player ID to unban:")'>Unban Player</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("teleport", ["Player ID", "coordinates (x,y,z)"], "")'>Teleport Player</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("teleport2me", ["Player ID", "coordinates (x,y,z)"], "")'>Teleport to Me</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("teleportgrid", ["position", "spacing", "rotation", "Max Per Row"], "")'>Teleport Grid</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("teleportpos", ["position", "Player ID", "Place on ground? (true/false)"], "")'>Teleport Position</button>
+    <button class="command-button" onclick='copyWithPrompt("teaminfo", "", "Enter the team ID:")'>Team Info</button>
+    <button class="command-button" onclick='copyWithPrompt("sleep", "", "Enter the Player ID to put to sleep:")'>Put Player to Sleep</button>
+    <button class="command-button" onclick='copyWithPrompt("relationshipmanager.sleeptoggleother", "", "Enter the Player ID to toggle sleep:")'>Sleep Toggle Player</button>
     <button class="command-button" onclick='copyToClipboard(`banlist`)'>Ban List</button>
     <button class="command-button" onclick='copyToClipboard(`kickall`)'>Kick All Players</button>
     <button class="command-button" onclick='copyToClipboard(`killallplayer`)'>Kill All Players</button>
     <button class="command-button" onclick='copyToClipboard(`getauthlevels`)'>Get All Auth Levels</button>
 </div>
 
-    <div id="entity-commands" class="category">
+
+   <div id="entity-commands" class="category">
     <h2>Entity Commands</h2>
-    <button class="command-button" onclick='copyToClipboard(`entity.deleteby "${prompt("Enter the Player ID to delete their buildings:")}"`)'>Delete Player Buildings</button>
+    <button class="command-button" onclick='copyWithPrompt("entity.deleteby", "", "Enter the Player ID to delete their buildings:")'>Delete Player Buildings</button>
     <button class="command-button" onclick='copyToClipboard(`ent destroybuilding`)'>Destroy Building</button>
-    <button class="command-button" onclick='copyToClipboard(`entity.deleteentity "${prompt("Enter the entity string to delete:")}" "${prompt("Enter 0 for non-animated, 1 for animated:")}"`)'>Delete Entity</button>
-    <button class="command-button" onclick='copyToClipboard(`vehicle.boat_corpse_seconds "${prompt("Enter the boat corpse time in seconds:")}"`)'>Boat Corpse Time</button>
-    <button class="command-button" onclick='copyToClipboard(`baseridableanimal.decayminutes "${prompt("Enter the horse decay time in minutes:")}"`)'>Horse Decay Time</button>
-    <button class="command-button" onclick='copyToClipboard(`baseridableanimal.dungtimescale "${prompt("Enter the horse dung time scale:")}"`)'>Horse Dung Time</button>
-    <button class="command-button" onclick='copyToClipboard(`server.planttickscale "${prompt("Enter the plant tick scale:")}"`)'>Plant Tick Scale</button>
-    <button class="command-button" onclick='copyToClipboard(`CanUseRecycler "${prompt("Enter 0 to disable recycler use, 1 to enable:")}"`)'>Toggle Recycler Use</button>
-    <button class="command-button" onclick='copyToClipboard(`RecyclerNextRecycleTime "${prompt("Enter the next recycle time in seconds:")}"`)'>Recycler Time</button>
-    <button class="command-button" onclick='copyToClipboard(`RecyclerStartTime "${prompt("Enter the recycler start time in seconds:")}"`)'>Recycler Start Time</button>
-    <button class="command-button" onclick='copyToClipboard(`Entity.deleteentity "${prompt("Enter the entity shortname to delete all entities of that type:")}" 0`)'>Delete All Entities</button>
+    <button class="command-button" onclick='copyWithMultiplePrompts("entity.deleteentity", ["entity string", "Enter 0 for non-animated, 1 for animated"], "")'>Delete Entity</button>
+    <button class="command-button" onclick='copyWithPrompt("vehicle.boat_corpse_seconds", "", "Enter the boat corpse time in seconds:")'>Boat Corpse Time</button>
+    <button class="command-button" onclick='copyWithPrompt("baseridableanimal.decayminutes", "", "Enter the horse decay time in minutes:")'>Horse Decay Time</button>
+    <button class="command-button" onclick='copyWithPrompt("baseridableanimal.dungtimescale", "", "Enter the horse dung time scale:")'>Horse Dung Time</button>
+    <button class="command-button" onclick='copyWithPrompt("server.planttickscale", "", "Enter the plant tick scale:")'>Plant Tick Scale</button>
+    <button class="command-button" onclick='copyWithPrompt("CanUseRecycler", "", "Enter 0 to disable recycler use, 1 to enable:")'>Toggle Recycler Use</button>
+    <button class="command-button" onclick='copyWithPrompt("RecyclerNextRecycleTime", "", "Enter the next recycle time in seconds:")'>Recycler Time</button>
+    <button class="command-button" onclick='copyWithPrompt("RecyclerStartTime", "", "Enter the recycler start time in seconds:")'>Recycler Start Time</button>
+    <button class="command-button" onclick='copyWithPrompt("Entity.deleteentity", "", "Enter the entity shortname to delete all entities of that type:")'>Delete All Entities</button>
 </div>
+
 
